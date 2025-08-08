@@ -259,6 +259,92 @@ class UserServiceTest {
         }
 
         @Test
+        @DisplayName("Should be possible to update only the username")
+        void shouldBePossibleToUpdateOnlyTheUsername() {
+
+            // arrange
+            var updateUserDto = new UpdateUserDto(
+                    "newUsername",
+                    null
+            );
+            var user = new User(
+                    UUID.randomUUID(),
+                    "username",
+                    "email@email.com",
+                    "password",
+                    Instant.now(),
+                    null
+            );
+            doReturn(Optional.of(user))
+                    .when(userRepository)
+                    .findById(uuidArgumentCaptor.capture());
+
+            doReturn(user)
+                    .when(userRepository)
+                    .save(userArgumentCaptor.capture());
+
+
+            // Act
+            userService.updateUserById(user.getUserId().toString(), updateUserDto);
+
+
+            var userCaptured = userArgumentCaptor.getValue();
+            // Assert
+            assertEquals(updateUserDto.username(), userCaptured.getUsername());
+            assertEquals(user.getPassword(), userCaptured.getPassword());
+            System.out.println(user.getPassword());
+            assertEquals(userCaptured.getEmail(), user.getEmail());
+
+            verify(userRepository, times(1))
+                    .findById(uuidArgumentCaptor.getValue());
+            verify(userRepository, times(1))
+                    .save(user);
+        }
+
+        @Test
+        @DisplayName("Should be possible to update only the password")
+        void shouldBePossibleToUpdateOnlyThePassword() {
+
+            // arrange
+            var updateUserDto = new UpdateUserDto(
+                    null,
+                    "newPassword"
+            );
+            var user = new User(
+                    UUID.randomUUID(),
+                    "username",
+                    "email@email.com",
+                    "password",
+                    Instant.now(),
+                    null
+            );
+            doReturn(Optional.of(user))
+                    .when(userRepository)
+                    .findById(uuidArgumentCaptor.capture());
+
+            doReturn(user)
+                    .when(userRepository)
+                    .save(userArgumentCaptor.capture());
+
+
+            // Act
+            userService.updateUserById(user.getUserId().toString(), updateUserDto);
+
+
+            var userCaptured = userArgumentCaptor.getValue();
+            // Assert
+            assertEquals(user.getUsername(), userCaptured.getUsername());
+            assertEquals(updateUserDto.password(), userCaptured.getPassword());
+            System.out.println(user.getPassword());
+            assertEquals(userCaptured.getEmail(), user.getEmail());
+
+            verify(userRepository, times(1))
+                    .findById(uuidArgumentCaptor.getValue());
+            verify(userRepository, times(1))
+                    .save(user);
+        }
+
+        @Test
         @DisplayName("Should not update user when user not exists")
         void shouldNotUpdateUserWhenUserNotExists() {
 
