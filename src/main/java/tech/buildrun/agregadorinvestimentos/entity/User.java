@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,21 +30,21 @@ public class User {
     private Instant creationTimestamp;
 
     @UpdateTimestamp
-    private Instant updatedTimestamp;
+    private Instant updateTimestamp;
 
     @OneToMany(mappedBy = "user")
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
-    public User(UUID userId, String username, String email, String password, Instant creationTimestamp, Instant updatedTimestamp) {
+    public User() {
+    }
+
+    public User(UUID userId, String username, String email, String password, Instant creationTimestamp, Instant updateTimestamp) {
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.password = password;
         this.creationTimestamp = creationTimestamp;
-        this.updatedTimestamp = updatedTimestamp;
-    }
-
-    public User() {
+        this.updateTimestamp = updateTimestamp;
     }
 
     public UUID getUserId() {
@@ -86,12 +87,12 @@ public class User {
         this.creationTimestamp = creationTimestamp;
     }
 
-    public Instant getUpdatedTimestamp() {
-        return updatedTimestamp;
+    public Instant getUpdateTimestamp() {
+        return updateTimestamp;
     }
 
-    public void setUpdatedTimestamp(Instant updatedTimestamp) {
-        this.updatedTimestamp = updatedTimestamp;
+    public void setUpdateTimestamp(Instant updateTimestamp) {
+        this.updateTimestamp = updateTimestamp;
     }
 
     public List<Account> getAccounts() {

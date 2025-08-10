@@ -1,4 +1,4 @@
 package tech.buildrun.agregadorinvestimentos.controller.dto;
 
-public class CreateStockDto {
+public record CreateStockDto(String stockId, String description) {
 }

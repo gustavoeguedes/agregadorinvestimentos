@@ -2,42 +2,44 @@ package tech.buildrun.agregadorinvestimentos.entity;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
-@Table(name = "tb_account_stocks")
+@Table(name = "tb_accountstocks")
 public class AccountStock {
 
     @EmbeddedId
-    private AccountStockId id;
+    private AccountStockId accountStockId;
 
     @ManyToOne
-    @MapsId("accountId")
     @JoinColumn(name = "account_id")
+    @MapsId("accountId")
     private Account account;
 
     @ManyToOne
-    @MapsId("stockId")
     @JoinColumn(name = "stock_id")
+    @MapsId("stockId")
     private Stock stock;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     public AccountStock() {
     }
 
-    public AccountStock(AccountStockId id, Account account, Stock stock, Integer quantity) {
-        this.id = id;
+    public AccountStock(AccountStockId accountStockId, Account account, Stock stock, int quantity) {
+        this.accountStockId = accountStockId;
         this.account = account;
         this.stock = stock;
         this.quantity = quantity;
     }
 
-    public AccountStockId getId() {
-        return id;
+    public AccountStockId getAccountStockId() {
+        return accountStockId;
     }
 
-    public void setId(AccountStockId id) {
-        this.id = id;
+    public void setAccountStockId(AccountStockId accountStockId) {
+        this.accountStockId = accountStockId;
     }
 
     public Account getAccount() {
@@ -56,11 +58,11 @@ public class AccountStock {
         this.stock = stock;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }
