@@ -176,7 +176,7 @@ class UserServiceTest {
             var userId = UUID.randomUUID();
 
             // Act
-            userService.deleteUser(userId.toString());
+            userService.deleteById(userId.toString());
 
             // Assert
             var idList = uuidArgumentCaptor.getAllValues();
@@ -203,7 +203,7 @@ class UserServiceTest {
             var userId = UUID.randomUUID();
 
             // Act
-            userService.deleteUser(userId.toString());
+            userService.deleteById(userId.toString());
 
             // Assert
             assertEquals(userId, uuidArgumentCaptor.getValue());
